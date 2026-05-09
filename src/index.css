@@ -7,36 +7,41 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --color-rpg-gold: #fbbf24;
-  --color-rpg-border: #334155;
-  --color-rpg-bg: #0f172a;
-  --color-rpg-card: #1e293b;
+  --color-rpg-border: #1e293b;
+  --color-rpg-bg: #020617;
+  --color-rpg-card: #0f172a;
   
-  --shadow-rpg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.25);
+  --shadow-rpg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
 }
 
 @layer base {
   body {
-    @apply bg-rpg-bg text-slate-200 font-sans;
+    @apply bg-rpg-bg text-slate-300 font-sans antialiased;
   }
   
   h1, h2, h3, h4 {
-    @apply font-display tracking-tight;
+    @apply font-display tracking-tight text-white;
   }
 }
 
 .rpg-panel {
-  @apply bg-rpg-card border border-rpg-border rounded-lg shadow-rpg p-6;
+  @apply bg-slate-900/40 border border-slate-800 rounded-lg shadow-rpg backdrop-blur-sm transition-all duration-300;
 }
 
 .rpg-button {
-  @apply px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded transition-all duration-200 uppercase text-xs font-bold tracking-widest active:scale-95;
+  @apply px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-xs font-bold tracking-widest transition-all duration-200 active:scale-95 text-slate-100 uppercase;
 }
 
 .rpg-button-primary {
-  @apply bg-amber-600 hover:bg-amber-500 border-amber-500 text-white shadow-lg shadow-amber-900/20;
+  @apply bg-amber-600 hover:bg-amber-500 border-amber-500 text-slate-950 font-black;
 }
 
 .rpg-input {
-  @apply bg-slate-900 border border-slate-700 rounded px-3 py-2 text-slate-200 focus:outline-none focus:border-amber-500 transition-colors;
+  @apply bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-200 focus:outline-none focus:border-amber-500 transition-colors;
+}
+
+.dot-grid {
+  background-image: radial-gradient(circle at 1px 1px, #1e293b 1px, transparent 0);
+  background-size: 24px 24px;
 }
 

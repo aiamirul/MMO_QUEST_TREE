@@ -58,8 +58,8 @@ export const QuestTreeVisualizer: React.FC<Props> = ({ quests }) => {
       .enter().append('path')
       .attr('class', 'link')
       .attr('fill', 'none')
-      .attr('stroke', '#334155')
-      .attr('stroke-width', 1.5)
+      .attr('stroke', '#1e293b')
+      .attr('stroke-width', 2)
       .attr('d', d3.linkHorizontal()
         .x((d: any) => d.y)
         .y((d: any) => d.x) as any);
@@ -72,32 +72,34 @@ export const QuestTreeVisualizer: React.FC<Props> = ({ quests }) => {
       .attr('transform', (d: any) => `translate(${d.y},${d.x})`);
 
     node.append('circle')
-      .attr('r', 4)
-      .attr('fill', (d: any) => d.children ? '#fbbf24' : '#64748b');
+      .attr('r', 5)
+      .attr('fill', (d: any) => d.children ? '#d97706' : '#1e293b')
+      .attr('stroke', (d: any) => d.children ? '#fbbf24' : '#334155')
+      .attr('stroke-width', 1.5);
 
     node.append('text')
       .attr('dy', '0.31em')
-      .attr('x', (d: any) => d.children ? -8 : 8)
+      .attr('x', (d: any) => d.children ? -12 : 12)
       .attr('text-anchor', (d: any) => d.children ? 'end' : 'start')
       .text((d: any) => d.data.name)
-      .attr('fill', '#e2e8f0')
+      .attr('fill', (d: any) => d.children ? '#fde68a' : '#94a3b8')
       .style('font-size', '10px')
-      .style('font-family', 'Inter, sans-serif')
+      .style('font-family', 'Space Grotesk, sans-serif')
+      .style('font-weight', '600')
       .clone(true).lower()
-      .attr('stroke', '#0f172a')
-      .attr('stroke-width', 3);
+      .attr('stroke', '#020617')
+      .attr('stroke-width', 4);
 
   }, [quests]);
 
   return (
-    <div className="rpg-panel overflow-hidden">
-      <h3 className="text-amber-500 mb-4 flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-        QUEST PROGRESSION MAPPING
-      </h3>
-      <div className="relative border border-slate-800 rounded bg-slate-950/50">
-        <svg ref={svgRef} />
+    <div className="flex-1 overflow-hidden relative border border-slate-800 rounded bg-slate-950/20 backdrop-blur-sm">
+      <div className="absolute top-4 left-4 z-10 flex gap-4">
+        <div className="text-[9px] flex items-center gap-2 font-mono text-slate-500 bg-slate-900/80 px-2 py-1 rounded border border-slate-800">
+           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> SYSTEM_LIVE
+        </div>
       </div>
+      <svg ref={svgRef} className="w-full h-full" />
     </div>
   );
 };
