@@ -39,16 +39,33 @@ export default function App() {
   const getUniqueItems = () => {
     const itemsMap: Record<string, { name: string; count: number; quests: string[] }> = {};
     quests.forEach(q => {
-      const itemName = q.allattrib.ITEM1;
-      if (itemName && itemName !== "") {
-        if (!itemsMap[itemName]) {
-          itemsMap[itemName] = { name: itemName, count: 0, quests: [] };
+      Object.entries(q.allattrib).forEach(([key, value]) => {
+        // Only look at ITEMx or PRODUCTx keys that contain strings
+        const isItemKey = /^(ITEM|PRODUCT)\d+$/.test(key);
+        if (isItemKey && typeof value === 'string' && value !== "") {
+          if (!itemsMap[value]) {
+            itemsMap[value] = { name: value, count: 0, quests: [] };
+          }
+
+          // Try to find corresponding qty
+          // Case 1: ITEM1 -> ITEM1_QTY
+          // Case 2: PRODUCT1 -> PRODUCT_QTY1
+          let qty = 0;
+          if (key.startsWith('ITEM')) {
+            qty = (q.allattrib as any)[`${key}_QTY`] || 0;
+          } else if (key.startsWith('PRODUCT')) {
+            const num = key.replace('PRODUCT', '');
+            qty = (q.allattrib as any)[`PRODUCT_QTY${num}`] || 0;
+          }
+
+          itemsMap[value].count += Number(qty);
+          if (!itemsMap[value].quests.includes(q.id)) {
+            itemsMap[value].quests.push(q.id);
+          }
         }
-        itemsMap[itemName].count += q.allattrib.ITEM1_QTY || 0;
-        itemsMap[itemName].quests.push(q.id);
-      }
+      });
     });
-    return Object.values(itemsMap);
+    return Object.values(itemsMap).sort((a, b) => b.count - a.count);
   };
 
   const uniqueItems = getUniqueItems();
@@ -297,7 +314,7 @@ export default function App() {
         <div className="flex gap-2">
           <label className="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded text-[10px] font-bold border border-slate-700 flex items-center gap-2 transition-all active:scale-95 cursor-pointer">
             <Upload size={14} /> LOAD FILE
-            <input type="file" className="hidden" accept=".json,.txt" onChange={handleFileSelect} />
+            <input type="file" className="hidden" accept=".json,.txt,.lua" onChange={handleFileSelect} />
           </label>
           <button 
             onClick={() => setView('editor')}

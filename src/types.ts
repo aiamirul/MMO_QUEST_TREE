@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Legend, LinearScale, Tooltip, PointElement, LineElement, Title, CategoryScale } from 'chart.js';
-
 export interface QuestAttributes {
+  [key: string]: string | number | undefined;
   ITEM1?: string;
   ITEM1_QTY?: number;
   PRODUCT1?: string;

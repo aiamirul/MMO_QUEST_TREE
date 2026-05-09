@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/// <reference types="vite/client" />
+
 import { MetaRecord } from '../types';
 
 const BASE_URL = import.meta.env.VITE_META_API_URL || "https://www.shabpltsystem.com/app/sanctum_app/api";
