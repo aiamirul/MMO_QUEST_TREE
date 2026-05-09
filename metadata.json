@@ -1,0 +1,6 @@
+{
+  "name": "MMO Quest & Rep Architect",
+  "description": "A comprehensive system for MMORPG quest progression, reputation management, and visual tree mapping using the Laravel Meta API for schema-less persistence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
